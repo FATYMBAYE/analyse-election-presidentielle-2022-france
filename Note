@@ -29,3 +29,32 @@ En 2022, seuls 30% des 15-64 ans avaient un emploi à Mayotte.
  Plus de trois quarts des habitants sont sous le seuil de pauvreté national. 
  Et environ un tiers de l'habitat est "informel",
  souvent composé de bidonvilles insalubres.
+
+
+
+ # Vérifier les types des colonnes
+print("Type de 'Code.département' dans data_security :", data_security['Code.département'].dtype)
+print("Type de 'Code du département' dans data_idf :", data_idf['Code du département'].dtype)
+
+# Renommer la colonne pour qu'elle corresponde à celle de data_idf
+data_security.rename(columns={'Code.département': 'Code du département'}, inplace=True)
+print("Type de 'Code du département' dans data_security après conversion :", data_security['Code du département'].dtype)
+print("Type de 'Code du département' dans data_idf :", data_idf['Code du département'].dtype)
+
+# Filtrer data_security pour la région Île-de-France (Code.région == 11)
+data_security_idf = data_security[data_security['Code.région'] == '11']
+print("Données de sécurité filtrées (Île-de-France) :\n", data_security_idf.head())
+
+# Concaténer les deux DataFrames
+'''data_combined = pd.merge(
+    data_idf,
+    data_security_idf,
+    on='Code du département',  # Colonne commune
+    how='outer'  # Pour inclure toutes les lignes des deux DataFrames
+)
+'''
+# Afficher les premières lignes des données fusionnées
+print("Données de sécurité filtrées (Île-de-France) :\n", data_security.head())
+#print("Données fusionnées :\n", data_combined.head(20))
+
+#print("Dimensions des données fusionnées :", data_combined.shape)
